@@ -26,6 +26,7 @@ wss.on('connection', ws=>{
                 (ATYP==3? msg.slice(i,i+=16).reduce((s,b,i,a)=>(i%2?s.concat(a.slice(i-1,i+1)):s), []).map(b=>b.readUInt16BE(0).toString(16)).join(':'):''));//ipv6
 
         logcb('conn:', host,port);
+        console.log('connection from:', ws._socket.remoteAddress)
         ws.send(new Uint8Array([VERSION, 0]));
         const duplex=createWebSocketStream(ws);
         net.connect({host,port}, function(){
